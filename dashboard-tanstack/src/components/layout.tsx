@@ -11,7 +11,7 @@ export default function Layout() {
       <Header />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar />
-        <main className="flex-1 p-4 overflow-auto bg-gray-50">
+        <main className="flex-1 p-4  text--overlay-foreground overflow-auto">
           {isLoading ? <Skeleton /> : <Outlet />}
         </main>
       </div>

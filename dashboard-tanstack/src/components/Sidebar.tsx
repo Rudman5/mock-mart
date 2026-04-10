@@ -2,8 +2,8 @@ import NavButton from './NavButton'
 
 export default function Sidebar() {
   return (
-    <div className="bg-gray-200 w-1/5 p-4">
-      <div className="flex flex-col gap-2">
+    <div className=" w-1/5 p-4 border-r">
+      <div className="flex flex-col gap-2 justify-stretch items-stretch">
         <NavButton label="Products" to="/products" />
         <NavButton label="Orders" to="/orders" />
         <NavButton label="Customers" to="/customers" />

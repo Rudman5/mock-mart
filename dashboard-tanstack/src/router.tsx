@@ -9,7 +9,7 @@ export const router = createRouter({
   context: {
     queryClient,
   },
-  defaultPreload: 'intent',
+  defaultPreload: false,
   scrollRestoration: true,
 })
 

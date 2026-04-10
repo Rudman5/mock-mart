@@ -20,7 +20,7 @@ export type MetaData = {
 }
 
 export type Product = {
-  id: number
+  id: string
   title: string
   description: string
   category: string
@@ -50,3 +50,4 @@ export type ProductsResponse = {
   skip: number
   limit: number
 }
+export type ProductId = Product['id']
