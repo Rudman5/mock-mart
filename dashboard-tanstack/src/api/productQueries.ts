@@ -18,3 +18,10 @@ export const getProductDetails = (id: string) =>
 export const updateProductMutation = (id: ProductId) => ({
   mutationFn: (data: Partial<Product>) => productApi.updateProduct(id, data),
 })
+
+export const getCategories = () =>
+  queryOptions({
+    queryKey: ['categories'],
+    queryFn: () => productApi.getCategories(),
+    staleTime: 1000 * 60 * 5,
+  })

@@ -35,7 +35,7 @@ export type Product = {
   dimensions: Dimensions
   warrantyInformation: string
   shippingInformation: string
-  availabilityStatus: string
+  availabilityStatus?: string
   reviews: Review[]
   returnPolicy: string
   minimumOrderQuantity: number

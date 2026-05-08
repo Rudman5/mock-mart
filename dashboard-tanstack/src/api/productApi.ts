@@ -25,4 +25,9 @@ export const productApi = {
     if (!res.ok) throw new Error(`Failed to update product ${id}`)
     return res.json()
   },
+  getCategories: async (): Promise<string[]> => {
+    const res = await fetch('https://dummyjson.com/products/category-list')
+    if (!res.ok) throw new Error('Failed to fetch categories')
+    return res.json()
+  },
 }

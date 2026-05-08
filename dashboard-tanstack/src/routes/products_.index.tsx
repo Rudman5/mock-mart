@@ -26,6 +26,7 @@ function ProductsPage() {
   const start = (page - 1) * ROWS_PER_PAGE + 1
   const end = Math.min(page * ROWS_PER_PAGE, data.products.length)
 
+  // TODO implement sorting and filtering - FROM Backend
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
       <Table>
