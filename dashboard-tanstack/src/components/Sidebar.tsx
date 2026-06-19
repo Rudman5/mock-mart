@@ -6,7 +6,6 @@ export default function Sidebar() {
       <div className="flex flex-col gap-2 justify-stretch items-stretch">
         <NavButton label="Products" to="/products" />
         <NavButton label="Orders" to="/orders" />
-        <NavButton label="Customers" to="/customers" />
         <NavButton label="Account" to="/account" />
       </div>
     </div>

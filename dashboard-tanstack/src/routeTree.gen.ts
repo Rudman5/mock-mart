@@ -10,8 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as OrdersRouteImport } from './routes/orders'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as CustomersRouteImport } from './routes/customers'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products_.index'
@@ -20,16 +18,6 @@ import { Route as ProductsProductIdRouteImport } from './routes/products_.$produ
 const OrdersRoute = OrdersRouteImport.update({
   id: '/orders',
   path: '/orders',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CustomersRoute = CustomersRouteImport.update({
-  id: '/customers',
-  path: '/customers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountRoute = AccountRouteImport.update({
@@ -56,8 +44,6 @@ const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
-  '/customers': typeof CustomersRoute
-  '/login': typeof LoginRoute
   '/orders': typeof OrdersRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/': typeof ProductsIndexRoute
@@ -65,8 +51,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
-  '/customers': typeof CustomersRoute
-  '/login': typeof LoginRoute
   '/orders': typeof OrdersRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products': typeof ProductsIndexRoute
@@ -75,8 +59,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/account': typeof AccountRoute
-  '/customers': typeof CustomersRoute
-  '/login': typeof LoginRoute
   '/orders': typeof OrdersRoute
   '/products_/$productId': typeof ProductsProductIdRoute
   '/products_/': typeof ProductsIndexRoute
@@ -86,26 +68,15 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/account'
-    | '/customers'
-    | '/login'
     | '/orders'
     | '/products/$productId'
     | '/products/'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/account'
-    | '/customers'
-    | '/login'
-    | '/orders'
-    | '/products/$productId'
-    | '/products'
+  to: '/' | '/account' | '/orders' | '/products/$productId' | '/products'
   id:
     | '__root__'
     | '/'
     | '/account'
-    | '/customers'
-    | '/login'
     | '/orders'
     | '/products_/$productId'
     | '/products_/'
@@ -114,8 +85,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRoute: typeof AccountRoute
-  CustomersRoute: typeof CustomersRoute
-  LoginRoute: typeof LoginRoute
   OrdersRoute: typeof OrdersRoute
   ProductsProductIdRoute: typeof ProductsProductIdRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
@@ -128,20 +97,6 @@ declare module '@tanstack/react-router' {
       path: '/orders'
       fullPath: '/orders'
       preLoaderRoute: typeof OrdersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/customers': {
-      id: '/customers'
-      path: '/customers'
-      fullPath: '/customers'
-      preLoaderRoute: typeof CustomersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account': {
@@ -178,8 +133,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRoute: AccountRoute,
-  CustomersRoute: CustomersRoute,
-  LoginRoute: LoginRoute,
   OrdersRoute: OrdersRoute,
   ProductsProductIdRoute: ProductsProductIdRoute,
   ProductsIndexRoute: ProductsIndexRoute,

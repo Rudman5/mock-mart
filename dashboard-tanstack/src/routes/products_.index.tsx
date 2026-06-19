@@ -43,9 +43,9 @@ function ProductsPage() {
           >
             <Table.Header>
               <Table.Row>
-                <Table.Column>ID</Table.Column>
-                <Table.Column>Title</Table.Column>
-                <Table.Column>Price</Table.Column>
+                <Table.Column isRowHeader>ID</Table.Column>
+                <Table.Column isRowHeader>Title</Table.Column>
+                <Table.Column isRowHeader>Price</Table.Column>
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -95,6 +95,4 @@ function ProductsPage() {
       </Table>
     </div>
   )
-  {
-  }
 }
