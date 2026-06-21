@@ -13,6 +13,7 @@ import { Route as OrdersRouteImport } from './routes/orders'
 import { Route as AccountRouteImport } from './routes/account'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductsIndexRouteImport } from './routes/products_.index'
+import { Route as ProductsNewRouteImport } from './routes/products_.new'
 import { Route as ProductsProductIdRouteImport } from './routes/products_.$productId'
 
 const OrdersRoute = OrdersRouteImport.update({
@@ -35,6 +36,11 @@ const ProductsIndexRoute = ProductsIndexRouteImport.update({
   path: '/products/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsNewRoute = ProductsNewRouteImport.update({
+  id: '/products_/new',
+  path: '/products/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
   id: '/products_/$productId',
   path: '/products/$productId',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AccountRoute
   '/orders': typeof OrdersRoute
   '/products/$productId': typeof ProductsProductIdRoute
+  '/products/new': typeof ProductsNewRoute
   '/products/': typeof ProductsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/account': typeof AccountRoute
   '/orders': typeof OrdersRoute
   '/products/$productId': typeof ProductsProductIdRoute
+  '/products/new': typeof ProductsNewRoute
   '/products': typeof ProductsIndexRoute
 }
 export interface FileRoutesById {
@@ -61,6 +69,7 @@ export interface FileRoutesById {
   '/account': typeof AccountRoute
   '/orders': typeof OrdersRoute
   '/products_/$productId': typeof ProductsProductIdRoute
+  '/products_/new': typeof ProductsNewRoute
   '/products_/': typeof ProductsIndexRoute
 }
 export interface FileRouteTypes {
@@ -70,15 +79,23 @@ export interface FileRouteTypes {
     | '/account'
     | '/orders'
     | '/products/$productId'
+    | '/products/new'
     | '/products/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/account' | '/orders' | '/products/$productId' | '/products'
+  to:
+    | '/'
+    | '/account'
+    | '/orders'
+    | '/products/$productId'
+    | '/products/new'
+    | '/products'
   id:
     | '__root__'
     | '/'
     | '/account'
     | '/orders'
     | '/products_/$productId'
+    | '/products_/new'
     | '/products_/'
   fileRoutesById: FileRoutesById
 }
@@ -87,6 +104,7 @@ export interface RootRouteChildren {
   AccountRoute: typeof AccountRoute
   OrdersRoute: typeof OrdersRoute
   ProductsProductIdRoute: typeof ProductsProductIdRoute
+  ProductsNewRoute: typeof ProductsNewRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
 }
 
@@ -120,6 +138,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products_/new': {
+      id: '/products_/new'
+      path: '/products/new'
+      fullPath: '/products/new'
+      preLoaderRoute: typeof ProductsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/products_/$productId': {
       id: '/products_/$productId'
       path: '/products/$productId'
@@ -135,6 +160,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountRoute: AccountRoute,
   OrdersRoute: OrdersRoute,
   ProductsProductIdRoute: ProductsProductIdRoute,
+  ProductsNewRoute: ProductsNewRoute,
   ProductsIndexRoute: ProductsIndexRoute,
 }
 export const routeTree = rootRouteImport

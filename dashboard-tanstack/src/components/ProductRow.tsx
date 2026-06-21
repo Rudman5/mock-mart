@@ -3,7 +3,7 @@ import { Table } from '@heroui/react'
 
 export function ProductRow({ product }: { product: Product }) {
   return (
-    <Table.Row id={product.id}>
+    <Table.Row id={product.id} className="cursor-pointer hover:bg-gray-100">
       <Table.Cell>{product.id}</Table.Cell>
       <Table.Cell>{product.title}</Table.Cell>
       <Table.Cell>${product.price}</Table.Cell>

@@ -34,8 +34,9 @@ function ProductsPage() {
   // TODO implement sorting and filtering - FROM Backend
 
   return (
-    <div className="gap-4 p-1 w-full">
-      <div className="flex items-center justify-between mb-4">
+    <div className="gap-4 p-4 w-full">
+      <div className="flex justify-between items-center">
+        <h2 className="text-xl font-semibold">Products</h2>
         <Button
           type="button"
           onClick={() =>
@@ -47,6 +48,7 @@ function ProductsPage() {
           Add Product
         </Button>
       </div>
+      <div className="flex items-center justify-between mb-4"></div>
       <Table className="w-full">
         <Table.ScrollContainer>
           <Table.Content
