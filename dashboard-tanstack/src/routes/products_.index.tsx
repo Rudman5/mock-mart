@@ -1,35 +1,53 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { Pagination, Table } from '@heroui/react'
+import { createFileRoute } from '@tanstack/react-router'
+import { Button, Pagination, Table } from '@heroui/react'
 import { getProducts } from '@/api/productQueries'
 import type { Product } from '@/api/types'
 import { ProductRow } from '@/components/ProductRow'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { ROWS_PER_PAGE } from '@/constants'
 
+type ProductSearch = {
+  page: number
+}
 export const Route = createFileRoute('/products_/')({
   loader: ({ context }) => context.queryClient.ensureQueryData(getProducts()),
   component: ProductsPage,
+  validateSearch: (search: Record<string, number>): ProductSearch => ({
+    page: search.page || 1,
+  }),
 })
 
 function ProductsPage() {
   const data = Route.useLoaderData()
-  const navigate = useNavigate()
+  const navigate = Route.useNavigate()
+  const search = Route.useSearch()
 
   // PAGINATION from heroui
-  const [page, setPage] = useState(1)
   const totalPages = Math.ceil(data.products.length / ROWS_PER_PAGE)
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1)
   const paginatedItems = useMemo(() => {
-    const start = (page - 1) * ROWS_PER_PAGE
+    const start = (search.page - 1) * ROWS_PER_PAGE
     return data.products.slice(start, start + ROWS_PER_PAGE)
-  }, [page])
-  const start = (page - 1) * ROWS_PER_PAGE + 1
-  const end = Math.min(page * ROWS_PER_PAGE, data.products.length)
-
+  }, [search.page])
+  const start = (search.page - 1) * ROWS_PER_PAGE + 1
+  const end = Math.min(search.page * ROWS_PER_PAGE, data.products.length)
   // TODO implement sorting and filtering - FROM Backend
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-      <Table>
+    <div className="gap-4 p-1 w-full">
+      <div className="flex items-center justify-between mb-4">
+        <Button
+          type="button"
+          onClick={() =>
+            navigate({
+              to: '/products/new',
+            })
+          }
+        >
+          Add Product
+        </Button>
+      </div>
+      <Table className="w-full">
         <Table.ScrollContainer>
           <Table.Content
             aria-label="Products"
@@ -63,8 +81,10 @@ function ProductsPage() {
             <Pagination.Content>
               <Pagination.Item>
                 <Pagination.Previous
-                  isDisabled={page === 1}
-                  onPress={() => setPage((p) => Math.max(1, p - 1))}
+                  isDisabled={search.page === 1}
+                  onPress={() =>
+                    navigate({ search: { ...search, page: search.page - 1 } })
+                  }
                 >
                   <Pagination.PreviousIcon />
                   Prev
@@ -73,8 +93,8 @@ function ProductsPage() {
               {pages.map((p) => (
                 <Pagination.Item key={p}>
                   <Pagination.Link
-                    isActive={p === page}
-                    onPress={() => setPage(p)}
+                    isActive={p === search.page}
+                    onPress={() => navigate({ search: { ...search, page: p } })}
                   >
                     {p}
                   </Pagination.Link>
@@ -82,8 +102,10 @@ function ProductsPage() {
               ))}
               <Pagination.Item>
                 <Pagination.Next
-                  isDisabled={page === totalPages}
-                  onPress={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  isDisabled={search.page === totalPages}
+                  onPress={() =>
+                    navigate({ search: { ...search, page: search.page + 1 } })
+                  }
                 >
                   Next
                   <Pagination.NextIcon />
