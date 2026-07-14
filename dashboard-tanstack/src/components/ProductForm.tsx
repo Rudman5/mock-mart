@@ -2,6 +2,7 @@ import BaseTextArea from '@/components/base/BaseTextArea'
 import BaseTextField from '@/components/base/BaseTextField'
 import { FieldError, Label, ListBox, Select } from '@heroui/react'
 import type { Product } from '@/api/types'
+import BaseImageUpload from './base/BaseImageUpload'
 
 type Props = {
   product: Partial<Product>
@@ -21,6 +22,15 @@ export default function ProductForm({
   return (
     <div className="flex gap-8">
       <div className="w-1/4 space-y-4">
+        {/* TODO ADD IMAGE UPLOAD */}
+        <BaseImageUpload
+          label="Thumbnail"
+          name="thumbnail"
+          onChange={(val) => onChange('thumbnail', val)}
+          isDisabled={disabledFields}
+          isInvalid={!!getError?.('thumbnail')}
+          errorMessage={getError?.('thumbnail')}
+        />
         {product.thumbnail ? (
           <img
             src={product.thumbnail}

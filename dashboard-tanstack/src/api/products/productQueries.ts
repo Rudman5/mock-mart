@@ -1,6 +1,6 @@
 import { queryOptions } from '@tanstack/react-query'
 import { productApi } from './productApi'
-import type { Product, ProductId } from './types'
+import type { Product, ProductId } from '../types'
 
 export const getProducts = () =>
   queryOptions({

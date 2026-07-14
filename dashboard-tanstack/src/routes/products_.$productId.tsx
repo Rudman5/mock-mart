@@ -2,7 +2,7 @@ import {
   getCategories,
   getProductDetails,
   updateProductMutation,
-} from '@/api/productQueries'
+} from '@/api/products/productQueries'
 
 import { Button, Form } from '@heroui/react'
 import { useMutation } from '@tanstack/react-query'

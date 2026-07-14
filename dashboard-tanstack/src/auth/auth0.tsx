@@ -1,5 +1,5 @@
 import { Auth0Provider, useAuth0 } from '@auth0/auth0-react'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useEffect, useRef } from 'react'
 
 export interface Auth0ContextType {
   isAuthenticated: boolean
@@ -28,6 +28,15 @@ export function Auth0Wrapper({ children }: { children: React.ReactNode }) {
 function Auth0ContextProvider({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, user, loginWithRedirect, logout, isLoading } =
     useAuth0()
+  const wasAuthenticatedRef = useRef(false)
+
+  useEffect(() => {
+    if (wasAuthenticatedRef.current && !isAuthenticated && !isLoading) {
+      logout({ logoutParams: { returnTo: window.location.origin } })
+    }
+
+    wasAuthenticatedRef.current = isAuthenticated
+  }, [isAuthenticated, isLoading, logout])
 
   const contextValue = {
     isAuthenticated,

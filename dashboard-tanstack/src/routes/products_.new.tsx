@@ -2,7 +2,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Form, Button } from '@heroui/react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
-import { createProductMutation, getCategories } from '@/api/productQueries'
+import {
+  createProductMutation,
+  getCategories,
+} from '@/api/products/productQueries'
 import ProductForm from '@/components/ProductForm'
 import productSchema from '@/validation/productSchema'
 

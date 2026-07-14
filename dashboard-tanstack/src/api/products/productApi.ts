@@ -1,4 +1,4 @@
-import type { ProductsResponse, Product, ProductId } from './types'
+import type { ProductsResponse, Product, ProductId } from '../types'
 
 export const productApi = {
   createProduct: async (data: Partial<Product>): Promise<Product> => {

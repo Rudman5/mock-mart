@@ -13,9 +13,10 @@ interface RouterContext {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   beforeLoad: async ({ context }) => {
-    if (!context.auth.isAuthenticated) {
-      context.auth.login()
+    if (context.auth.isLoading || context.auth.isAuthenticated) {
+      return
     }
+    context.auth.login()
   },
   component: RootComponent,
 })

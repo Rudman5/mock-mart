@@ -9,14 +9,6 @@ const rootElement = document.getElementById('app')!
 function InnerApp() {
   const auth = useAuth0Context()
 
-  if (auth.isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        Loading
-      </div>
-    )
-  }
-
   return <RouterProvider router={router} context={{ auth }} />
 }
 if (!rootElement.innerHTML) {
