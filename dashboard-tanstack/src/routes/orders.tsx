@@ -107,7 +107,7 @@ function OrderPage() {
             <Modal.CloseTrigger />
             <Modal.Header>
               <Heading slot="title" level={4}>
-                Order status
+                <span aria-label="Order status">Order status</span>
               </Heading>
             </Modal.Header>
             <Modal.Body>

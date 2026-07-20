@@ -5,15 +5,19 @@ import type { Product } from '@/api/types'
 import { ProductRow } from '@/components/ProductRow'
 import { ROWS_PER_PAGE } from '@/constants'
 import PaginatedTable from '@/components/PaginatedTable'
+import { useMemo } from 'react'
+import BaseSearchField from '@/components/base/BaseSearchField'
 
 type ProductSearch = {
   page: number
+  query?: string
 }
 export const Route = createFileRoute('/products_/')({
   loader: ({ context }) => context.queryClient.ensureQueryData(getProducts()),
   component: ProductsPage,
-  validateSearch: (search: Record<string, number>): ProductSearch => ({
-    page: search.page || 1,
+  validateSearch: (search: Record<string, string | number>): ProductSearch => ({
+    page: Number(search.page) || 1,
+    query: search.query ? String(search.query) : undefined,
   }),
 })
 
@@ -21,13 +25,35 @@ function ProductsPage() {
   const data = Route.useLoaderData()
   const navigate = Route.useNavigate()
   const search = Route.useSearch()
+  const query = search.query ?? ''
 
-  // TODO implement sorting and filtering - FROM Backend
+  const handleQueryChange = (value: string) => {
+    navigate({ search: { ...search, query: value, page: 1 } })
+  }
+
+  const filteredProducts = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase()
+
+    if (!normalizedQuery) {
+      return data.products
+    }
+
+    return data.products.filter((product) => {
+      const haystack =
+        `${product.title} ${product.description} ${product.brand ?? ''} ${product.category}`.toLowerCase()
+      return haystack.includes(normalizedQuery)
+    })
+  }, [data.products, query])
 
   return (
     <div className="gap-4 p-4 w-full">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Products</h2>
+        <BaseSearchField
+          value={query}
+          onChange={handleQueryChange}
+          placeholder="Search products"
+        />
         <Button
           type="button"
           onClick={() =>
@@ -41,7 +67,7 @@ function ProductsPage() {
       </div>
       <div className="flex items-center justify-between mb-4"></div>
       <PaginatedTable
-        items={data.products}
+        items={filteredProducts}
         rowsPerPage={ROWS_PER_PAGE}
         ariaLabel="Products"
         search={search}
