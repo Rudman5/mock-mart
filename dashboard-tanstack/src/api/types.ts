@@ -42,6 +42,7 @@ export type Product = {
   meta: MetaData
   thumbnail: string
   images: string[]
+  quantity: number
 }
 
 export type ProductsResponse = {
@@ -60,6 +61,7 @@ export type Cart = {
   userId: number
   totalProducts: number
   totalQuantity: number
+  status?: ShipmentStatus
 }
 
 export type CartsResponse = {
@@ -68,3 +70,6 @@ export type CartsResponse = {
   skip: number
   limit: number
 }
+export const shipmentStatuses = ['Pending', 'Shipped', 'Delivered'] as const
+
+export type ShipmentStatus = (typeof shipmentStatuses)[number]

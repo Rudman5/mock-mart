@@ -10,8 +10,9 @@ interface Props {
 export default function NavButton({ label, to }: Props) {
   return (
     <Button
+      type="button"
       size="lg"
-      variant="secondary"
+      variant="tertiary"
       fullWidth
       className="justify-start"
       onClick={() => router.navigate({ to })}

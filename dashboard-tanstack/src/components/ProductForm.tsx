@@ -1,14 +1,18 @@
 import BaseTextArea from '@/components/base/BaseTextArea'
 import BaseTextField from '@/components/base/BaseTextField'
-import { FieldError, Label, ListBox, Select } from '@heroui/react'
+import { Button, FieldError, Label, ListBox, Select } from '@heroui/react'
 import type { Product } from '@/api/types'
-import BaseImageUpload from './base/BaseImageUpload'
+
+import Attachment from './shadcn/Attachment'
 
 type Props = {
   product: Partial<Product>
   categories: string[]
   disabledFields?: boolean
-  onChange: (name: string, value: string | number) => void
+  onChange: (name: string, value: string | number | string[]) => void
+  onFilesChange?: (files: File[]) => void
+  onRemoveImage?: (index: number) => void
+  resetAttachmentSignal?: number
   getError?: (path: string) => string | undefined
 }
 
@@ -17,39 +21,39 @@ export default function ProductForm({
   categories,
   disabledFields = true,
   onChange,
+  onFilesChange,
+  onRemoveImage,
+  resetAttachmentSignal,
   getError,
 }: Props) {
   return (
     <div className="flex gap-8">
       <div className="w-1/4 space-y-4">
-        {/* TODO ADD IMAGE UPLOAD */}
-        <BaseImageUpload
-          label="Thumbnail"
-          name="thumbnail"
-          onChange={(val) => onChange('thumbnail', val)}
-          isDisabled={disabledFields}
-          isInvalid={!!getError?.('thumbnail')}
-          errorMessage={getError?.('thumbnail')}
-        />
-        {product.thumbnail ? (
-          <img
-            src={product.thumbnail}
-            alt={product.title}
-            className="w-full rounded-sm bg-white border-foreground border shadow-sm"
+        {!disabledFields && (
+          <Attachment
+            onFilesChange={onFilesChange}
+            acceptedTypes=".png,.jpg,.jpeg"
+            resetSignal={resetAttachmentSignal}
           />
-        ) : (
-          <div className="w-full h-40 rounded-sm bg-gray-50 border border-dashed flex items-center justify-center">
-            No image
-          </div>
         )}
-
-        <div className="grid grid-cols-2 gap-2">
-          {(product.images || []).map((img, i) => (
-            <img
-              key={i}
-              src={img}
-              className="w-full h-20 object-cover border rounded"
-            />
+        <div className="grid grid-cols-2 gap-3">
+          {[...(product.images || [])].map((img, i) => (
+            <div key={`${img}-${i}`} className="relative">
+              {!disabledFields && (
+                <Button
+                  size="sm"
+                  onClick={() => onRemoveImage?.(i)}
+                  className="absolute -right-2 -top-2"
+                  aria-label={`Remove image ${i + 1}`}
+                >
+                  X
+                </Button>
+              )}
+              <img
+                src={img}
+                className="w-full h-20 object-cover border rounded"
+              />
+            </div>
           ))}
         </div>
       </div>

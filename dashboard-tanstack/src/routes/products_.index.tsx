@@ -54,11 +54,9 @@ function ProductsPage() {
         }
         renderHeader={
           <Table.Header>
-            <Table.Row>
-              <Table.Column isRowHeader>ID</Table.Column>
-              <Table.Column isRowHeader>Title</Table.Column>
-              <Table.Column isRowHeader>Price</Table.Column>
-            </Table.Row>
+            <Table.Column isRowHeader>ID</Table.Column>
+            <Table.Column isRowHeader>Title</Table.Column>
+            <Table.Column isRowHeader>Price</Table.Column>
           </Table.Header>
         }
         renderRow={(product: Product) => (
