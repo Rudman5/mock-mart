@@ -12,7 +12,7 @@ type CartSearch = {
   page: number
 }
 
-export const Route = createFileRoute('/carts')({
+export const Route = createFileRoute('/orders')({
   loader: ({ context }) => context.queryClient.ensureQueryData(getCarts()),
   component: OrderPage,
   validateSearch: (search: Record<string, number>): CartSearch => ({
